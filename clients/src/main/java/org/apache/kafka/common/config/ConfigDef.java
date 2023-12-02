@@ -848,6 +848,10 @@ public class ConfigDef {
          * be the binary name of the Class.
          */
         CLASS,
+
+YAML,
+JSON,
+
         /**
          * Used for string values containing sensitive data such as a password or key. The values of configurations with
          * of this type are not included in logs and instead replaced with "[hidden]". Values must be provided as a
@@ -863,6 +867,8 @@ public class ConfigDef {
             return this == PASSWORD;
         }
     }
+
+    configDef.define("some.config", Type.YAML, "default value in YAML");
 
     /**
      * The importance level for a configuration
@@ -970,6 +976,12 @@ public class ConfigDef {
             else
                 return "[" + min + ",...," + max + "]";
         }
+
+        public static Range between(Number min, Number max){
+            return new Range(min,max);
+        }
+
+        configDef.define("some.number.config", Type.INT, 5, Range.between(0,"Some config with numeric range"));
     }
 
     public static class ValidList implements Validator {
@@ -995,6 +1007,10 @@ public class ConfigDef {
 
         public String toString() {
             return validString.toString();
+        }
+
+        public String toJson(){
+            return json;
         }
     }
 

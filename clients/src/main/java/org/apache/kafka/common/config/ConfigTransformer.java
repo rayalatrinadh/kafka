@@ -63,10 +63,14 @@ public class ConfigTransformer {
      *
      * @param configProviders a Map of provider names and {@link ConfigProvider} instances.
      */
-    public ConfigTransformer(Map<String, ConfigProvider> configProviders) {
+    public ConfigTransformer(Map<String, ConfigProvider> configProviders, Pattern varPattern) {
         this.configProviders = configProviders;
+        this.pattern = varPattern;
     }
 
+//Usage:
+Pattern customPattern = Pattern.compile("(@[^@]+)");
+ConfigTransformer transformer = new ConfigTransformer(providers, customPattern);
     /**
      * Transforms the given configuration data by using the {@link ConfigProvider} instances to
      * look up values to replace the variables in the pattern.
@@ -175,3 +179,4 @@ public class ConfigTransformer {
         }
     }
 }
+
